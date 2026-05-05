@@ -50,7 +50,7 @@ public class CrearGrupoInteractor implements CrearGrupoFamiliarUseCase {
         GrupoFamiliar grupoGuardado = grupoOutputPort.guardar(grupo);
 
         
-        usuario.setGrupo(grupoGuardado);
+        ((JefeDeHogar) usuario).crearGrupo(grupoGuardado);
         usuarioOutputPort.guardar(usuario);
 
         return grupoGuardado;

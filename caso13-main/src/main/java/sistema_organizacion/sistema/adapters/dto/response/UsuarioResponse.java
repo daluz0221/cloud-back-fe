@@ -6,6 +6,9 @@ public class UsuarioResponse {
     private String correo;
     private String username;
     private String rol;
+    private String estado;
+    private Long grupoId;
+    private String grupoNombre;
 
     public Long getId()                 { return id; }
     public void setId(Long id)          { this.id = id; }
@@ -17,4 +20,10 @@ public class UsuarioResponse {
     public void setUsername(String u)       { this.username = u; }
     public String getRol()                  { return rol; }
     public void setRol(String r)            { this.rol = r; }
+    public String getEstado()               { return estado; }
+    public void setEstado(String e)         { this.estado = e; }
+    public Long getGrupoId()                { return grupoId; }
+    public void setGrupoId(Long grupoId)    { this.grupoId = grupoId; }
+    public String getGrupoNombre()              { return grupoNombre; }
+    public void setGrupoNombre(String grupoNombre) { this.grupoNombre = grupoNombre; }
 }
