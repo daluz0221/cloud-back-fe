@@ -1,7 +1,6 @@
 package sistema_organizacion.sistema.usecases.tarea.impl;
 
 import sistema_organizacion.sistema.entities.JefeDeHogar;
-import sistema_organizacion.sistema.entities.MiembroHogar;
 import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.entities.Usuario;
 import sistema_organizacion.sistema.entities.Estado;
@@ -69,17 +68,12 @@ public class CrearTareaInteractor implements CrearTareaUseCase {
             estadoPendiente
         );
 
-        // HU-16 CA-01-C/CA-02: asignación opcional de miembro
+        // HU-16 CA-01-C/CA-02: asignación opcional de miembro (incluye JefeDeHogar)
         if (command.getUsuarioAsignadoId() != null) {
             Usuario miembro = usuarioOutputPort
                 .buscarPorId(command.getUsuarioAsignadoId())
                 .orElseThrow(() -> new UsuarioNoEncontradoException(
                     command.getUsuarioAsignadoId().toString()));
-
-            if (!(miembro instanceof MiembroHogar)) {
-                throw new TareaInvalidaException(
-                    "Solo se puede asignar una tarea a un miembro del hogar");
-            }
 
             if (miembro.getGrupo() == null
                     || !miembro.getGrupo().getId().equals(command.getGrupoId())) {

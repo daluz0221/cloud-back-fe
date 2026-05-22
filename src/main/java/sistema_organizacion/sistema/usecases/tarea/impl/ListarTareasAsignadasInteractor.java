@@ -2,7 +2,6 @@ package sistema_organizacion.sistema.usecases.tarea.impl;
 
 import java.util.List;
 
-import sistema_organizacion.sistema.entities.MiembroHogar;
 import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.entities.Usuario;
 import sistema_organizacion.sistema.entities.exception.AccesoDenegadoException;
@@ -27,10 +26,6 @@ public class ListarTareasAsignadasInteractor implements ListarTareasAsignadasUse
             .buscarPorId(miembroId)
             .orElseThrow(AccesoDenegadoException::new);
 
-        if (!(usuario instanceof MiembroHogar)) {
-            throw new AccesoDenegadoException();
-        }
-
-        return tareaOutputPort.findByUsuarioId(miembroId);
+        return tareaOutputPort.findByUsuarioId(usuario.getId());
     }
 }

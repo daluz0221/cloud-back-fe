@@ -3,7 +3,6 @@ package sistema_organizacion.sistema.usecases.tarea.impl;
 import java.time.LocalDate;
 
 import sistema_organizacion.sistema.entities.JefeDeHogar;
-import sistema_organizacion.sistema.entities.MiembroHogar;
 import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.entities.Usuario;
 import sistema_organizacion.sistema.entities.exception.AccesoDenegadoException;
@@ -55,7 +54,7 @@ public class ModificarTareaInteractor implements ModificarTareaUseCase {
 
         tarea.actualizar(titulo, descripcion, fechaLimite);
 
-        // HU-16: gestión de asignación de miembro
+        // HU-16: gestión de asignación de miembro (incluye JefeDeHogar)
         if (command.isLimpiarAsignacion()) {
             // CA-04: eliminar asignación
             tarea.asignarResponsable(null, null);
@@ -65,11 +64,6 @@ public class ModificarTareaInteractor implements ModificarTareaUseCase {
                 .buscarPorId(command.getUsuarioAsignadoId())
                 .orElseThrow(() -> new UsuarioNoEncontradoException(
                     command.getUsuarioAsignadoId().toString()));
-
-            if (!(miembro instanceof MiembroHogar)) {
-                throw new TareaInvalidaException(
-                    "Solo se puede asignar una tarea a un miembro del hogar");
-            }
 
             if (miembro.getGrupo() == null
                     || !miembro.getGrupo().getId().equals(tarea.getGrupoId())) {
