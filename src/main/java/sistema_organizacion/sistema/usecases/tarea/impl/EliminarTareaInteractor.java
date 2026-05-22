@@ -1,6 +1,7 @@
 package sistema_organizacion.sistema.usecases.tarea.impl;
 
 import sistema_organizacion.sistema.entities.JefeDeHogar;
+import sistema_organizacion.sistema.entities.Tarea;
 import sistema_organizacion.sistema.entities.Usuario;
 import sistema_organizacion.sistema.entities.exception.AccesoDenegadoException;
 import sistema_organizacion.sistema.entities.exception.TareaNoEncontradaException;
@@ -30,8 +31,14 @@ public class EliminarTareaInteractor implements EliminarTareaUseCase {
             throw new AccesoDenegadoException();
         }
 
-        tareaOutputPort.buscarPorId(command.getTareaId())
+        Tarea tarea = tareaOutputPort
+            .buscarPorId(command.getTareaId())
             .orElseThrow(() -> new TareaNoEncontradaException(command.getTareaId()));
+
+        if (usuario.getGrupo() == null
+                || !usuario.getGrupo().getId().equals(tarea.getGrupoId())) {
+            throw new AccesoDenegadoException();
+        }
 
         tareaOutputPort.eliminar(command.getTareaId());
     }

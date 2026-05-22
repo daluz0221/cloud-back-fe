@@ -48,6 +48,12 @@ public class CrearTareaInteractor implements CrearTareaUseCase {
             .orElseThrow(() ->
                 new GrupoFamiliarNoEncontradoException(command.getGrupoId().toString()));
 
+        // Verificar que el jefe pertenece al grupo donde crea la tarea
+        if (usuario.getGrupo() == null
+                || !usuario.getGrupo().getId().equals(command.getGrupoId())) {
+            throw new AccesoDenegadoException();
+        }
+
         // Nombre único en el grupo
         boolean nombreDuplicado = tareaOutputPort
             .findByGrupoId(command.getGrupoId())

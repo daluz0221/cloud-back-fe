@@ -40,6 +40,12 @@ public class ModificarTareaInteractor implements ModificarTareaUseCase {
             .buscarPorId(command.getTareaId())
             .orElseThrow(() -> new TareaNoEncontradaException(command.getTareaId()));
 
+        // Verificar que el jefe pertenece al grupo de la tarea
+        if (usuario.getGrupo() == null
+                || !usuario.getGrupo().getId().equals(tarea.getGrupoId())) {
+            throw new AccesoDenegadoException();
+        }
+
         String titulo = esValido(command.getNuevoTitulo())
             ? command.getNuevoTitulo()
             : tarea.getTitulo();
