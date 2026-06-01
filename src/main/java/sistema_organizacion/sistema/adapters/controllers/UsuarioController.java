@@ -56,6 +56,7 @@ public class UsuarioController {
     }
 
     // HU-10: inicio de sesión
+    @Transactional(readOnly = true)
     @PostMapping("/login")
     public ResponseEntity<SesionResponse> login(
             @RequestBody LoginRequest request) {

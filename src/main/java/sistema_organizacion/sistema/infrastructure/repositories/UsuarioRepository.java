@@ -12,6 +12,9 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByCorreo(String correo);
+
+    @Query("SELECT u FROM Usuario u LEFT JOIN FETCH u.grupo WHERE u.correo = :correo")
+    Optional<Usuario> findByCorreoWithGrupo(@Param("correo") String correo);
     Optional<Usuario> findByUsername(String username);
 
     @Query("SELECT COUNT(u) > 0 FROM Usuario u WHERE u.grupo.id = :grupoId AND u.rol.nombreRol = :nombreRol")

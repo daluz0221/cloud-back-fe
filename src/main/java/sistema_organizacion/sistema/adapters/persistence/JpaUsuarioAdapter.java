@@ -32,7 +32,7 @@ public class JpaUsuarioAdapter implements UsuarioOutputPort {
 
     @Override
     public Optional<Usuario> buscarPorCorreo(String correo) {
-        return usuarioRepository.findByCorreo(correo);
+        return usuarioRepository.findByCorreoWithGrupo(correo);
     }
 
     @Override
